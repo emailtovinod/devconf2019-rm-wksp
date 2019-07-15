@@ -6,7 +6,7 @@
 :showdetailed:
 :imagesdir: ./images
 
-== PoD Resource Configuration Workshop
+== POD Resource Configuration Workshop
 
 === Create/Use a project (namespace) in the OpenShift cluster to deploy the demo app and configure resources.
 
@@ -44,7 +44,7 @@ oc create -f rm-demo/rm-lab-dc.yaml
 deploymentconfig.apps.openshift.io/rm-demo-app created
 ----
 
-. Please verify that that the `demo` app PoD is created 
+. Please verify that that the `demo` app POD is created 
 +
 [%nowrap]
 ----
@@ -113,7 +113,7 @@ rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
 . Now you may copy the url and paste in your workstation browser address bar or in plain and simple , access the url using browser ( I may recommend to use chrome/firefox)
 
 [NOTE]
-Please note the resources configuration (cpu and memory) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the PoD/Container , the application container is using the available `cpu` and `memory` resources of its host machine (compute node) as the limit values and there is no request ( cpu and memory reservation) during the PoD schedule.
+Please note the resources configuration (cpu and memory) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the POD/Container , the application container is using the available `cpu` and `memory` resources of its host machine (compute node) as the limit values and there is no request ( cpu and memory reservation) during the POD schedule.
 
 . Check the Quality of Service (QoS) of the application POD
 +
@@ -129,7 +129,7 @@ QoS Class:       BestEffort
 ----
 
 [TIP]
-Since we have only one POD in the project(namespace), the command will show the QoS of the pod. If you have multiple PoDs in the project, need to specify the pod name to describe the specific POD.
+Since we have only one POD in the project(namespace), the command will show the QoS of the pod. If you have multiple PODs in the project, need to specify the pod name to describe the specific POD.
 
 [NOTE]
 
@@ -137,7 +137,7 @@ POD having the `BestEffort QoS Class` are treated with the lowest priority. Proc
 
 
 
-=== Now set the resource configuration for the demo pplication container `rm-demo` and verify the change in its QoS
+=== Set the resource configuration for the demo application container `rm-demo` and verify the change of `QOS Class` of the POD.
 
 . Configure the resource request for the `rm-demo` application container.
 
