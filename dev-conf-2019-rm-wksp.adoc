@@ -16,7 +16,19 @@
 ----
 export GUID=<Please type the GUID provided by the workshop facilitator>
 ----
+[TIP]
+The workshop facilitator will provide the GUID.
+
+. Log into the OpenShift cluster using the credentials and URL provided by the workshop facilitator.
 +
+[%nowrap]
+----
+oc login -u <USER NAME> <URL>
+----
++
+[TIP]
+The workshop facilitator will provide the `URL` and `USER NAME.` Typically the `USER NAME` and the `GUID` will be the same for the workshop. The `PASSWORD` also will be provided by the facilitator.
+ 
 . Switch to the project(namespace) assigned by the workshop facilitator.
 +
 [%nowrap]
@@ -97,7 +109,7 @@ rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-d
 
 [NOTE]
 
-The route you created will provide an external http url to access the application. To save some typing, you may execute the below command to see the actual url for the demo application
+The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
 
 . Please execute the command
 +
@@ -106,7 +118,7 @@ The route you created will provide an external http url to access the applicatio
 echo `oc get route -o jsonpath={.items[0].spec.host}`/resource.php
 ----
 +
-.Sample Output (Url may vary in your Output)
+.Sample Output (URL may vary in your Output)
 ----
 rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
 ----
@@ -151,7 +163,7 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi
 [TIP]
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration.In the scenario, the new new POD has cpu and memory resource `request` settings.
  
-. Now refresh the broser which displaying the resource settings [ Accessing the Application Url ]  and observe the changes in the resource request.
+. Now refresh the broser which displaying the resource settings [ Accessing the Application URL ]  and observe the changes in the resource request.
 
 . Check the Quality of Service (QoS) of the application POD
 +
@@ -181,7 +193,7 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=51
 [TIP]
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration.In the scenario, the new new POD has cpu and memory resource `request` and `limits` settings.
  
-. Now refresh the broser which displaying the resource settings [ Accessing the Application Url ]  and observe the changes in the resource request.
+. Now refresh the broser which displaying the resource settings [ Accessing the Application URL ]  and observe the changes in the resource request.
 
 . Check the Quality of Service (QoS) of the application POD
 + 
@@ -211,7 +223,7 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=25
 [TIP]
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration.In the scenario, the new new POD has cpu and memory resource `request` and the same values set for resource `limits` too.
 
-. Now refresh the broser which displaying the resource settings [ Accessing the Application Url ]  and observe the changes in the resource request.
+. Now refresh the broser which displaying the resource settings [ Accessing the Application URL ]  and observe the changes in the resource request.
 
 . Check the Quality of Service (QoS) of the application POD
 +
