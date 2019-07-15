@@ -1,0 +1,230 @@
+:sectnums!:
+:hardbreaks:
+:scrollbar:
+:data-uri:
+:toc2:
+:showdetailed:
+:imagesdir: ./images
+
+== PoD Resource Configuration Workshop
+
+=== Create/Use a project (namespace) in the OpenShift cluster to deploy the demo app and configure resources.
+
+. Export the provided `GUID` to the terminal session of the `client VM`.
++
+[%nowrap]
+----
+export GUID=<Please type the GUID provided by the workshop facilitator>
+----
++
+. Switch to the project(namespace) assigned by the workshop facilitator.
++
+[%nowrap]
+----
+oc project $GUID-rm-demo
+----
++
+
+. Clone manifest for `demo` app.
++
+[%nowrap]
+----
+git clone https://github.com/emailtovinod/rm-demo.git
+----
++
+. Create the `demo` app using the manifest file.
++
+[%nowrap]
+----
+oc create -f rm-demo/rm-lab-dc.yaml 
+----
++
+.Sample Output
+----
+deploymentconfig.apps.openshift.io/rm-demo-app created
+----
+
+. Please verify that that the `demo` app PoD is created 
++
+[%nowrap]
+----
+oc get pods
+----
++
+
+.Sample Output (NAME and AGE parameters may vary in your Output)
+----
+NAME                  READY     STATUS    RESTARTS   AGE
+rm-demo-app-3-bswfr   1/1       Running   0          57m
+----
+. Expose the `deploymentconfig` to create `service` for the `demo` app
++
+[%nowrap]
+----
+oc expose dc/rm-demo-app
+----
++
+.Sample Output 
+----
+service/rm-demo-app exposed
+----
+
+. Expose the `service` to create `route` (ingress url) for the demo app.
++
+[%nowrap]
+----
+oc expose svc/rm-demo-app
+----
++
+.Sample Output
+----
+route.route.openshift.io/rm-demo-app exposed
+----
+. List the route of the demo app
++
+[%nowrap]
+----
+oc get route
+----
++
+.Sample Output (HOST/PORT parameter may vary in your Output)
+----
+NAME          HOST/PORT                                           PATH      SERVICES      PORT      TERMINATION   WILDCARD
+rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-demo-app   port-1                  None
+----
+
+=== Check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
+
+[NOTE]
+
+The route you created will provide an external http url to access the application. To save some typing, you may execute the below command to see the actual url for the demo application
+
+. Please execute the command
++
+[%nowrap]
+----
+echo `oc get route -o jsonpath={.items[0].spec.host}`/resource.php
+----
++
+.Sample Output (Url may vary in your Output)
+----
+rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
+----
+. Now you may copy the url and paste in your workstation browser address bar or in plain and simple , access the url using browser ( I may recommend to use chrome/firefox)
+
+[NOTE]
+Please note the resources configuration (cpu and memory) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the PoD/Container , the application container is using the available `cpu` and `memory` resources of its host machine (compute node) as the limit values and there is no request ( cpu and memory reservation) during the PoD schedule.
+
+. Check the Quality of Service (QoS) of the application POD
++
+[%nowrap]
+----
+oc describe po | grep -i qos
+----
++
+
+.Sample Output
+----
+QoS Class:       BestEffort
+----
+
+[TIP]
+Since we have only one POD in the project(namespace), the command will show the QoS of the pod. If you have multiple PoDs in the project, need to specify the pod name to describe the specific POD.
+
+[NOTE]
+
+POD having the `BestEffort QoS Class` are treated with the lowest priority. Processes in these containers are first to be killed if the system runs out of memory.
+
+
+
+=== Now set the resource configuration for the demo pplication container `rm-demo` and verify the change in its QoS
+
+. Configure the resource request for the `rm-demo` application container.
+
++
+[%nowrap]
+----
+oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi
+----
++
+
+[TIP]
+Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration.In the scenario, the new new POD has cpu and memory resource `request` settings.
+ 
+. Now refresh the broser which displaying the resource settings [ Accessing the Application Url ]  and observe the changes in the resource request.
+
+. Check the Quality of Service (QoS) of the application POD
++
+[%nowrap]
+----
+oc describe po | grep -i qos
+----
++
+
+.Sample Output
+----
+QoS Class:       Burstable
+----
+
+[NOTE]
+Please note that the POD QoS changed to `Burstable`. Now the scheduler schedule the POD to a node which meet its resource request. Still the resource limit shows the available cpu and memory resource of its node.When limits are not specified, they default to the node capacity.The PODs having `Burstable QoS Class` get second best priority in the cluster.containers under system memory pressure are more likely to be killed once they exceed their requests and no other BestEffort containers exist.
+
+. Go ahead and set the resource limit for the POD, which is slightly higher than the resource request.
+
++
+[%nowrap]
+----
+oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=512m,memory=512Mi
+----
++
+
+[TIP]
+Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration.In the scenario, the new new POD has cpu and memory resource `request` and `limits` settings.
+ 
+. Now refresh the broser which displaying the resource settings [ Accessing the Application Url ]  and observe the changes in the resource request.
+
+. Check the Quality of Service (QoS) of the application POD
++ 
+[%nowrap]
+----
+oc describe po | grep -i qos
+----
++
+
+.Sample Output
+----
+QoS Class:       Burstable
+----
+
+[NOTE]
+Eventhough the QoS remains the same - Burstable - as in the case of `request` only setting, here we set the `limit` for the run time resource consumption of the POD. 
+
+. As the next task, set the value of resource `limit` as that of resource `request`.
+
++
+[%nowrap]
+----
+oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=250m,memory=256Mi
+----
++
+
+[TIP]
+Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration.In the scenario, the new new POD has cpu and memory resource `request` and the same values set for resource `limits` too.
+
+. Now refresh the broser which displaying the resource settings [ Accessing the Application Url ]  and observe the changes in the resource request.
+
+. Check the Quality of Service (QoS) of the application POD
++
+[%nowrap]
+----
+oc describe po | grep -i qos
+----
++
+
+.Sample Output
+----
+QoS Class:       Guaranteed
+----
+
+[NOTE]
+Now the QoS of the POD changed from `Burstable` to `Guaranteed`. Pods with `Guaranteed QoS Class` are considered top-priority and are guaranteed to not be killed until they exceed their limits.                          
