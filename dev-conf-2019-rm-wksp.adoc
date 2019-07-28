@@ -116,7 +116,6 @@ rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-d
 === POD Resource and QoS testing
 
 Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
-
 [NOTE]
 The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
 
@@ -137,7 +136,6 @@ rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
 +
 
 . Now you need to copy the URL and paste in your workstation browser address bar or in plain and simple, access the URL using a browser ( It is recommended to use chrome/firefox)
-
 [NOTE]
 Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the Container,the resources of its host machine (compute node) is set as its soft `resource limit`. Also note that there is no `resource request` ( CPU and memory reservation) during the POD schedule.
 
