@@ -104,18 +104,20 @@ oc get route
 ----
 +
 .Sample Output (HOST/PORT parameter may vary in your Output)
++
+[%nowrap]
 ----
 NAME          HOST/PORT                                           PATH      SERVICES      PORT      TERMINATION   WILDCARD
 rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-demo-app   port-1                  None
 ----
++
 
 === POD Resource and QoS testing
 
 Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
 
-[NOTE]
 
-The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
+NOTE: The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
 
 . Please execute the command
 +
@@ -125,14 +127,17 @@ echo `oc get route -o jsonpath={.items[0].spec.host}`/resource.php
 ----
 +
 .Sample Output (The URL may vary in your output)
++
+[%nowrap]
 ----
 rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
 ----
++
 
 . Now you may copy the URL and paste in your workstation browser address bar or in plain and simple, access the URL using a browser ( I may recommend using chrome/firefox)
 
-[NOTE]
-Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the POD/Container, the application container is using the available `CPU` and `MEMORY` resources of its host machine (compute node) as the `resource limit` and there is no `resource request` ( CPU and memory reservation) during the POD schedule.
+
+NOTE: Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the POD/Container, the application container is using the available `CPU` and `MEMORY` resources of its host machine (compute node) as the `resource limit` and there is no `resource request` ( CPU and memory reservation) during the POD schedule.
 
 . Check the Quality of Service (QoS) of the application POD.
 
@@ -221,12 +226,15 @@ oc describe po | grep -i qos
 +
 
 .Sample Output
++
+[%nowrap]
 ----
 QoS Class:       Burstable
 ----
++
 
-[NOTE]
-Even though the QoS remains the same - Burstable - as in the case of `request` only setting, here we set the `limit` for the run time resource consumption of the POD. 
+
+NOTE: Even though the QoS remains the same - Burstable - as in the case of `request` only setting, here we set the `limit` for the run time resource consumption of the POD. 
 
 . As the next task, set the value of resource `limit` as that of resource `request`.
 
@@ -253,9 +261,12 @@ oc describe po | grep -i qos
 +
 
 .Sample Output
++
+[%nowrap]
 ----
 QoS Class:       Guaranteed
 ----
++
 
 [NOTE]
 Note that the QoS of the POD changed from `Burstable` to `Guaranteed`. Pods with `Guaranteed QoS Class` are considered top-priority and are guaranteed not to be killed until they exceed their limits.
