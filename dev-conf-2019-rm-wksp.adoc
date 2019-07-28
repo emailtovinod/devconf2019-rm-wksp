@@ -105,7 +105,6 @@ oc get route
 +
 .Sample Output (HOST/PORT parameter may vary in your Output)
 +
-[%nowrap]
 ----
 NAME          HOST/PORT                                           PATH      SERVICES      PORT      TERMINATION   WILDCARD
 rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-demo-app   port-1                  None
