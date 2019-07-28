@@ -133,10 +133,10 @@ echo `oc get route -o jsonpath={.items[0].spec.host}`/resource.php
 rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
 ----
 +
-
 . Now you need to copy the URL and paste in your workstation browser address bar or in plain and simple, access the URL using a browser ( It is recommended to use chrome/firefox)
 
 NOTE: Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the POD/Container, the application container is using the available `CPU` and `MEMORY` resources of its host machine (compute node) as the `resource limit` and there is no `resource request` ( CPU and memory reservation) during the POD schedule.
+
 
 . Check the Quality of Service (QoS) of the application POD.
 
