@@ -1,10 +1,11 @@
-:sectnums!:
+:sectnums:
 :hardbreaks:
 :scrollbar:
 :data-uri:
 :toc2:
 :showdetailed:
 :number:
+:toc-title: Workshop Tasks
 :imagesdir: ./images
 
 == POD Resource Management Workshop
