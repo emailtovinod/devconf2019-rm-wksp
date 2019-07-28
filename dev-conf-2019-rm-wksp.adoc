@@ -8,7 +8,7 @@
 
 == POD Resource Configuration Workshop
 
-===Demo App deployment
+=== Demo App deployment
 
 As the first task you need to create/use a project (namespace) in the OpenShift cluster to deploy the demo app and configure resources.
 
@@ -107,7 +107,7 @@ NAME          HOST/PORT                                           PATH      SERV
 rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-demo-app   port-1                  None
 ----
 
-===Resource and QoS testing
+=== POD Resource and QoS testing
 
 Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
 
@@ -155,7 +155,7 @@ POD having the `BestEffort QoS Class` are treated with the lowest priority. Proc
 
 
 
-===Set the Resource Configuration
+=== Set the Resource Configuration
 
 In this part of the lab you set the resource configuration for the demo application container `rm-demo` and verify the change in the `QOS Class` of the POD.
 
