@@ -8,7 +8,9 @@
 
 == POD Resource Configuration Workshop
 
-=== Create/Use a project (namespace) in the OpenShift cluster to deploy the demo app and configure resources.
+===Demo App deployment
+
+As the first task you need to create/use a project (namespace) in the OpenShift cluster to deploy the demo app and configure resources.
 
 . Export the provided `GUID` to the terminal session of the `client VM`.
 +
@@ -105,7 +107,9 @@ NAME          HOST/PORT                                           PATH      SERV
 rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-demo-app   port-1                  None
 ----
 
-=== Check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
+===Resource and QoS testing
+
+Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
 
 [NOTE]
 
@@ -151,7 +155,9 @@ POD having the `BestEffort QoS Class` are treated with the lowest priority. Proc
 
 
 
-=== Set the resource configuration for the demo application container `rm-demo` and verify the change of `QOS Class` of the POD.
+===Set the Resource Configuration
+
+In this part of the lab you set the resource configuration for the demo application container `rm-demo` and verify the change in the `QOS Class` of the POD.
 
 . Configure the resource request for the `rm-demo` application container.
 
@@ -229,7 +235,8 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=25
 [TIP]
 
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration. In our current scenario, the new POD has CPU and MEMORY resource `request` and the same values set for resource `limits`  too.
-. Now refresh the browser which displays the resource settings [ Accessing the Application URL ]  and observes the changes in the resource request.
+
+. Please refresh the browser which displays the resource settings [ Accessing the Application URL ]  and observes the changes in the resource request.
 
 . Check the Quality of Service (QoS) of the application POD.
 
@@ -246,4 +253,69 @@ QoS Class:       Guaranteed
 ----
 
 [NOTE]
-Now the QoS of the POD changed from `Burstable` to `Guaranteed`. Pods with `Guaranteed QoS Class` are considered top-priority and are guaranteed not to be killed until they exceed their limits.
+Note that the QoS of the POD changed from `Burstable` to `Guaranteed`. Pods with `Guaranteed QoS Class` are considered top-priority and are guaranteed not to be killed until they exceed their limits.
+
+
+=== LimitRange Configuration
+ 
+It is the time to configure and test the `limitrange` admission control. To verify the `limitrange` enforcement, we need to `rollback` the application deploymentconfiguration to the first revision, the one without any resource settings.
+
+[NOTE]
+OpenShift `deploymentconfig` rollback function  revert an application back to a previous revision and is very handy to `undo` changes in the deployment.
+
+. Execute the following command to rollback to the firt revision without the resources configuration.
+
++
+[%nowrap]
+----
+oc rollout undo dc/rm-demo-app --to-revision=1
+----
++
+
+. Please refresh the browser which displays the resource settings and verify the changes.
+
+. Create a `limitrange` object in the `namespace` using the provided manifest.
+
+
++
+[%nowrap]
+----
+oc create -f rm-demo/limit-mem-cpu-per-container.yaml
+----
++
+
+. List the `limitrange` object in the namespace.
+
++
+[%nowrap]
+----
+oc get limitranges
+----
++
+
+.Sample Output
+----
+NAME                          CREATED AT
+limit-mem-cpu-per-container   2019-07-28T06:59:09Z
+----
+
+. Rollout a new `replication controller` by executing the command.
+
++
+[%nowrap]
+----
+oc rollout latest dc/rm-demo-app
+----
++
+
+***You may wait for a minute to complete the creation of the new Pod!!!!***
+
+. Hey, lets refresh the browser and observe the changes in the Pod resources.
+
+
+**Congratulations!!!You Did it...Now you become a Pod Resource Management Ninja!!!!**
+
+
+
+
+ 
