@@ -4,9 +4,10 @@
 :data-uri:
 :toc2:
 :showdetailed:
+:number:
 :imagesdir: ./images
 
-== POD Resource Configuration Workshop
+== POD Resource Management Workshop
 
 === Demo App deployment
 
@@ -308,7 +309,7 @@ oc rollout latest dc/rm-demo-app
 ----
 +
 
-***You may wait for a minute to complete the creation of the new Pod!!!!***
+_You may wait for a minute to complete the creation of the new Pod!!!!_
 
 . Hey, lets refresh the browser and observe the changes in the Pod resources.
 
