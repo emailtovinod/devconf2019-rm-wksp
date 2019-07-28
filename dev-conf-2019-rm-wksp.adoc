@@ -117,7 +117,8 @@ rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-d
 
 Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
 
-NOTE: The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
+[NOTE]
+The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
 
 . Please execute the command
 +
@@ -137,9 +138,8 @@ rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
 
 . Now you need to copy the URL and paste in your workstation browser address bar or in plain and simple, access the URL using a browser ( It is recommended to use chrome/firefox)
 
-
-NOTE: Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the POD/Container, the application container is using the available `CPU` and `MEMORY` resources of its host machine (compute node) as the `resource limit` and there is no `resource request` ( CPU and memory reservation) during the POD schedule.
-
+[NOTE]
+Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the Container,the resources of its host machine (compute node) is set as its soft `resource limit`. Also note that there is no `resource request` ( CPU and memory reservation) during the POD schedule.
 
 . Check the Quality of Service (QoS) of the application POD.
 +
@@ -162,7 +162,6 @@ QoS Class:       BestEffort
 Since we have only one POD in the project(namespace), the command will show the QoS of the pod. If you have multiple PODs in the project, need to specify the pod name to describe the specific POD.
 
 [NOTE]
-
 POD having the `BestEffort QoS Class` are treated with the lowest priority. Processes in these containers are first to be killed if the system runs out of memory.
 
 
