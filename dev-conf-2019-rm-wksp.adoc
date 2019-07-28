@@ -126,6 +126,7 @@ NOTE: The route you created will provide an external `http url` to access the ap
 echo `oc get route -o jsonpath={.items[0].spec.host}`/resource.php
 ----
 +
+
 .Sample Output (The URL may vary in your output)
 +
 [%nowrap]
@@ -133,11 +134,14 @@ echo `oc get route -o jsonpath={.items[0].spec.host}`/resource.php
 rm-demo-app-user51-rm-demo.apps.cdf7.openshift.opentlc.com/resource.php
 ----
 +
+
 . Now you need to copy the URL and paste in your workstation browser address bar or in plain and simple, access the URL using a browser ( It is recommended to use chrome/firefox)
 
-NOTE: Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the POD/Container, the application container is using the available `CPU` and `MEMORY` resources of its host machine (compute node) as the `resource limit` and there is no `resource request` ( CPU and memory reservation) during the POD schedule.
-. Check the Quality of Service (QoS) of the application POD.
 
+NOTE: Please note the resource configuration (CPU and MEMORY) of the application container displaying in the browser. Since we did not configure resource `request` and `limit` for the POD/Container, the application container is using the available `CPU` and `MEMORY` resources of its host machine (compute node) as the `resource limit` and there is no `resource request` ( CPU and memory reservation) during the POD schedule.
+
+
+. Check the Quality of Service (QoS) of the application POD.
 +
 [%nowrap]
 ----
@@ -146,9 +150,13 @@ oc describe po | grep -i qos
 +
 
 .Sample Output
+
++
+[%nowrap]
 ----
 QoS Class:       BestEffort
 ----
++
 
 [TIP]
 Since we have only one POD in the project(namespace), the command will show the QoS of the pod. If you have multiple PODs in the project, need to specify the pod name to describe the specific POD.
