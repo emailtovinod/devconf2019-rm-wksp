@@ -231,11 +231,9 @@ QoS Class:       Burstable
 ----
 +
 
-
 NOTE: Even though the QoS remains the same - Burstable - as in the case of `request` only setting, here we set the `limit` for the run time resource consumption of the POD. 
 
 . As the next task, set the value of resource `limit` as that of resource `request`.
-
 +
 [%nowrap]
 ----
@@ -244,7 +242,6 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=25
 +
 
 [TIP]
-
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration. In our current scenario, the new POD has CPU and MEMORY resource `request` and the same values set for resource `limits`  too.
 
 . Please refresh the browser which displays the resource settings [ Accessing the Application URL ]  and observes the changes in the resource request.
