@@ -114,7 +114,6 @@ rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-d
 
 
 === POD Resource and QoS testing
-
 Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo`.
 [NOTE]
 The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
@@ -272,7 +271,6 @@ Note that the QoS of the POD changed from `Burstable` to `Guaranteed`. Pods with
 
 
 === LimitRange Configuration
- 
 It is the time to configure and test the `limitrange` admission control. To verify the `limitrange` enforcement, we need to `rollback` the application deploymentconfiguration to the first revision, the one without any resource settings.
 [NOTE]
 OpenShift `deploymentconfig` rollback function  revert an application back to a previous revision and is very handy to `undo` changes in the deployment.
