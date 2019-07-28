@@ -103,9 +103,7 @@ route.route.openshift.io/rm-demo-app exposed
 oc get route
 ----
 +
-
 .Sample Output (HOST/PORT parameter may vary in your Output)
-
 +
 [%nowrap]
 ----
