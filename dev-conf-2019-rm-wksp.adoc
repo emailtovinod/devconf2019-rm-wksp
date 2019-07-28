@@ -115,9 +115,10 @@ rm-demo-app   rm-demo-app-test3.apps.cdf7.openshift.opentlc.com             rm-d
 
 === POD Resource and QoS testing
 
-Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo` 
+Let's  check the Resource Settings and Quality of Service (QoS) of the `demo` application `rm-demo`.
 [NOTE]
 The route you created will provide an external `http url` to access the application. To save some typing, you may execute the below command to see the actual url for the demo application.
+
 
 . Please execute the command
 +
@@ -159,7 +160,6 @@ QoS Class:       BestEffort
 
 [TIP]
 Since we have only one POD in the project(namespace), the command will show the QoS of the pod. If you have multiple PODs in the project, need to specify the pod name to describe the specific POD.
-
 [NOTE]
 POD having the `BestEffort QoS Class` are treated with the lowest priority. Processes in these containers are first to be killed if the system runs out of memory.
 
@@ -179,7 +179,6 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi
 +
 
 [TIP]
-
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration. In our scenario, the new POD will have CPU and MEMORY resource `request` settings.
  
 . Now refresh the browser which displays the resource settings [ Accessing the Application URL ] and observes the changes in the `resource request`.
@@ -275,7 +274,6 @@ Note that the QoS of the POD changed from `Burstable` to `Guaranteed`. Pods with
 === LimitRange Configuration
  
 It is the time to configure and test the `limitrange` admission control. To verify the `limitrange` enforcement, we need to `rollback` the application deploymentconfiguration to the first revision, the one without any resource settings.
-
 [NOTE]
 OpenShift `deploymentconfig` rollback function  revert an application back to a previous revision and is very handy to `undo` changes in the deployment.
 
