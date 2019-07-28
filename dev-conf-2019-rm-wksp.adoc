@@ -186,10 +186,12 @@ oc describe po | grep -i qos
 +
 
 .Sample Output
++
+[%nowrap]
 ----
 QoS Class:       Burstable
 ----
-
++
 
 NOTE: Please note that the POD QoS changed to Burstable. Now the scheduler schedules the POD to a node which meets its resource request. Still, the resource limit shows the available CPU and MEMORY resource of its node. When `resource limits` are not specified, they default to the node capacity. The PODs having Burstable QoS Class get second best priority in the cluster.containers under system memory pressure are more likely to be killed once they exceed their requests and no other BestEffort containers exist.
 
