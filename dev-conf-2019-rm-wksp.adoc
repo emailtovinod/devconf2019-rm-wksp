@@ -176,9 +176,15 @@ In this part of the lab you set the resource configuration for the demo applicat
 oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi
 ----
 +
-
 [TIP]
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration. In our scenario, the new POD will have CPU and MEMORY resource `request` settings.
+. Please verify that that the `demo` app POD is created
++
+[%nowrap]
+----
+oc get pods
+----
++
  
 . Now refresh the browser which displays the resource settings [ Accessing the Application URL ] and observes the changes in the `resource request`.
 
@@ -214,6 +220,13 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=51
 [TIP]
 
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration. In our scenario, the new  POD has CPU and MEMORY resource `request` and `limits` settings.
+. Please verify that that the `demo` app POD is created
++
+[%nowrap]
+----
+oc get pods
+----
++
 
 . Now refresh the browser which displays the resource settings [ Accessing the Application URL ]  and observes the changes in the resource request.
  
@@ -246,6 +259,13 @@ oc set resources dc/rm-demo-app --requests cpu=250m,memory=256Mi --limits cpu=25
 
 [TIP]
 Wait for a few seconds (`~30-40sec.`) to create a new container before proceeding.ConfigChange trigger in OpenShift DeploymentConfig results in a new deployment whenever changes are detected to the replication controller template of the deployment configuration. In our current scenario, the new POD has CPU and MEMORY resource `request` and the same values set for resource `limits`  too.
+. Please verify that that the `demo` app POD is created
++
+[%nowrap]
+----
+oc get pods
+----
++
 
 . Please refresh the browser which displays the resource settings [ Accessing the Application URL ]  and observes the changes in the resource request.
 
@@ -283,7 +303,13 @@ OpenShift `deploymentconfig` rollback function  revert an application back to a 
 oc rollout undo dc/rm-demo-app --to-revision=1
 ----
 +
-
+. Please verify that that the `demo` app POD is created
++
+[%nowrap]
+----
+oc get pods
+----
++
 . Please refresh the browser which displays the resource settings and verify the changes.
 
 . Create a `limitrange` object in the `namespace` using the provided manifest.
@@ -321,6 +347,13 @@ oc rollout latest dc/rm-demo-app
 +
 
 _You may wait for a minute to complete the creation of the new Pod!!!!_
+. Please verify that that the new `demo` app POD is created
++
+[%nowrap]
+----
+oc get pods
+----
++
 
 . Hey, lets refresh the browser and observe the changes in the Pod resources.
 
@@ -328,6 +361,3 @@ _You may wait for a minute to complete the creation of the new Pod!!!!_
 **Congratulations!!!You Did it...Now you become a Pod Resource Management Ninja!!!!**
 
 
-
-
- 
