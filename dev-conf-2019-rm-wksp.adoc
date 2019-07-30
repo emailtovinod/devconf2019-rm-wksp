@@ -14,15 +14,6 @@
 
 As the first task you need to create/use a project (namespace) in the OpenShift cluster to deploy the demo app and configure resources.
 
-. Export the provided `GUID` to the terminal session of the `client VM`.
-+
-[%nowrap]
-----
-export GUID=<Please type the GUID provided by the workshop facilitator>
-----
-[TIP]
-The workshop facilitator will provide the GUID.
-
 . Log into the OpenShift cluster using the credentials and URL provided by the workshop facilitator.
 +
 [%nowrap]
@@ -32,6 +23,16 @@ oc login -u <USER NAME> <URL>
 +
 [TIP]
 The workshop facilitator will provide the `URL` and `USER NAME.` Typically the `USER NAME` and the `GUID` will be the same for the workshop. The `PASSWORD` also will be provided by the facilitator.
+
+. For the convenience of executing the commands export the provided `USER/GUID` to the terminal session of the `client VM`.
++
+[%nowrap]
+----
+export GUID=<Please type the GUID provided by the workshop facilitator>
+----
+[TIP]
+The workshop facilitator will provide the GUID.
+
  
 . Switch to the project(namespace) assigned by the workshop facilitator.
 +
